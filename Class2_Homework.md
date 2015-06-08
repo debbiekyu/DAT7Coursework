@@ -25,8 +25,12 @@ find . -name '*.tsv' -o -name '*.csv'
 ./data/ufo.csv  
 
 ```  
-Note: Using "find . -name *.tsv*.csv*" did not seem to work for Mac.  But I had trouble finding  
-any answers on the internet! 
+Note: Using 
+```
+find . -name *.tsv*.csv* 
+```
+did not seem to work for Mac; I had some trouble finding out why on the internet so would 
+be curious to know if others had the same issue.
 
 **Question 3:**  
 Number of occurrences of the word 'dictionary' across all files in the DAT7 repo: 23  
