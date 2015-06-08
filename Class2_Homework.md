@@ -14,7 +14,7 @@ v. Chicken burritos have more black beans than pinto beans.
 
 **Question 2:**  
 
-Code for list of all the CSV or TSV files in the DAT7 repo:
+Code and list of all the CSV or TSV files in the DAT7 repo:
 ```
 find . -name '*.tsv' -o -name '*.csv'  
 ./data/airlines.csv  
@@ -25,9 +25,11 @@ find . -name '*.tsv' -o -name '*.csv'
 ./data/ufo.csv  
 
 ```  
+Note: Using find . -name *.tsv*.csv* did not seem to work for Mac.  But I had trouble finding  
+any answers on the internet! 
 
 **Question 3:**  
-Number of occurrences of the word 'dictionary' across all files in the DAT7 repo: 23
+Number of occurrences of the word 'dictionary' across all files in the DAT7 repo: 23  
 Code while in the DAT7 repo:
 ```
 grep -ir "directory" . | grep -ci "directory"
