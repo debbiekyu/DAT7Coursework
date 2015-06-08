@@ -25,7 +25,7 @@ find . -name '*.tsv' -o -name '*.csv'
 ./data/ufo.csv  
 
 ```  
-Note: Using find . -name *.tsv*.csv* did not seem to work for Mac.  But I had trouble finding  
+Note: Using "find . -name *.tsv*.csv*" did not seem to work for Mac.  But I had trouble finding  
 any answers on the internet! 
 
 **Question 3:**  
