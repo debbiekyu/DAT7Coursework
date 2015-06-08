@@ -16,9 +16,15 @@ v. Chicken burritos have more black beans than pinto beans.m
 
 Code for list of all the CSV or TSV files in the DAT7 repo:
 ```
+find . -name '*.tsv' -o -name '*.csv'  
+./data/airlines.csv  
+./data/chipotle.tsv  
+./data/drinks.csv  
+./data/imdb_1000.csv  
+./data/sms.tsv  
+./data/ufo.csv  
 
-
-```
+```  
 
 **Question 3:**  
 Number of occurrences of the word 'dictionary' across all files in the DAT7 repo: 23
@@ -27,13 +33,6 @@ Code while in the DAT7 repo:
 grep -ir "directory" . | grep -ci "directory"
 23
 ```
-Interestingly, when I used 
-```
-grep -irc "directory" . 
-```
-This resulted in printing every file in the DAT7 repo, followed by the number of times
-"directory" appeared in the file.  Piping the -ir to -ic then resulted in a summation of
-the number of times directory appeared.  
 
 **Question 4: (bonus)**  
 Something 'interesting' about the Chipotle data:  
