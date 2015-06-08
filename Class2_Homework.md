@@ -10,7 +10,7 @@ number.
 iii. There are 55,837 lines in the file.   
 iv. It appears that chicken burritos are more popular (count of 553) as opposed to steak
 burritos (count of 368).  
-v. Chicken burritos have more black beans than pinto beans.m
+v. Chicken burritos have more black beans than pinto beans.
 
 **Question 2:**  
 
