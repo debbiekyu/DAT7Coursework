@@ -7,7 +7,7 @@ column is quantity, etc. Each row is each individual item in each order, so for 
 the first order is the first four rows of data, where the customer ordered 4 items.    
 ii. There are 1834 orders in the file - I used the tail command to look at the last order 
 number.  
-iii. There are 55,837 lines in the file.   
+iii. There are 4,623 lines in the file.   
 iv. It appears that chicken burritos are more popular (count of 553) as opposed to steak
 burritos (count of 368).  
 v. Chicken burritos have more black beans than pinto beans.
@@ -16,7 +16,7 @@ v. Chicken burritos have more black beans than pinto beans.
 
 Code and list of all the CSV or TSV files in the DAT7 repo:
 ```
-find . -name '*.tsv' -o -name '*.csv'  
+find . -name *.?sv
 ./data/airlines.csv  
 ./data/chipotle.tsv  
 ./data/drinks.csv  
@@ -39,6 +39,12 @@ Code while in the DAT7 repo:
 grep -ir "directory" . | grep -ci "directory"
 23
 ```
+Simpler method: 
+```
+grep -ir "directory" . | wc 
+23	433	3249
+```
+First, second, and third number are number of lines, words, and characters.
 
 **Question 4: (bonus)**  
 Something 'interesting' about the Chipotle data:  
