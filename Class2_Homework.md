@@ -36,5 +36,17 @@ This resulted in printing every file in the DAT7 repo, followed by the number of
 the number of times directory appeared.  
 
 **Question 4: (bonus)**  
-Something 'interesting' about the Chipotle data:
+Something 'interesting' about the Chipotle data:  
+The top 5 most frequently ordered items are:  
+1. Chicken Bowl  
+2. Chicken Burrito  
+3. Chips and Guacamole  
+4. Steak Burrito  
+5. Canned Soft Drink  
+
+
+
+
+
+
 
