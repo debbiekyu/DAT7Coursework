@@ -113,7 +113,7 @@ my_string = 'hello there'
 # 'in' is useful for dictionaries (checks keys but not values)
 my_dict = {'name':'Kevin', 'title':'instructor'}
 'name' in my_dict       # True
-'Kevin' in my_dict      # False
+ 'Kevin' in my_dict      # False
 
 # 'count' method for strings counts how many times a character appears
 my_string.count('e')    # 3
