@@ -34,6 +34,7 @@ Hint: Think carefully about the simplest way to do this!
 #then add those total values per order and divide by 1834
 order_list_totals = [float(order[4][1:]) for order in order_data]
 average_price = round(sum(order_list_totals)/(len(set(order_num))), 2)
+#ANSWER: Average price is $18.81
 
 '''
 INTERMEDIATE LEVEL
@@ -45,6 +46,7 @@ Note: Just look for 'Canned Soda' and 'Canned Soft Drink', and ignore other drin
          
 uniq_drinks = [row[3] for row in order_data if "Canned" in row[2]]
 print set(uniq_drinks)		
+#ANSWER: set(['[Lemonade]', '[Dr. Pepper]', '[Diet Coke]', '[Nestea]', '[Mountain Dew]', '[Diet Dr. Pepper]', '[Coke]', '[Coca Cola]', '[Sprite]'])
 
 '''
 ADVANCED LEVEL
@@ -59,6 +61,7 @@ Hint: Think carefully about the easiest way to count the number of toppings!
 burrito_count = [1 for row in order_data if "Burrito" in row[2]]
 topping_count = [row[3].count(",") +1 for row in order_data if "Burrito" in row[2]]
 avg_burrito_toppings= round(float(sum(topping_count))/sum(burrito_count), 2)
+#ANSWER: avg_burrito_toppings is 5.4 toppings
 
 '''
 ADVANCED LEVEL
@@ -79,6 +82,8 @@ for row in order_data:
     if "Chips" in row[2]:
         chips_dict[row[2]] =  chips_dict[row[2]] + int(row[1])
         
+#ANSWER: defaultdict(<type 'int'>, {'Chips and Roasted Chili-Corn Salsa': 18, 'Chips and Tomatillo-Red Chili Salsa': 25, 'Chips and Mild Fresh Tomato Salsa': 1, 'Chips and Guacamole': 506, 'Chips and Fresh Tomato Salsa': 130, 'Chips and Tomatillo Red Chili Salsa': 50, 'Chips and Tomatillo-Green Chili Salsa': 33, 'Side of Chips': 110, 'Chips and Roasted Chili Corn Salsa': 23, 'Chips': 230, 'Chips and Tomatillo Green Chili Salsa': 45})
+        
 #not using default dict:
 chips_dict = {}
 for row in order_data:
@@ -87,6 +92,17 @@ for row in order_data:
             chips_dict[row[2]] =  chips_dict[row[2]] + int(row[1])
         else:
             chips_dict[row[2]] = int(row[1])
-    
+
+#ANSWER: {'Chips': 230,
+# 'Chips and Fresh Tomato Salsa': 130,
+# 'Chips and Guacamole': 506,
+# 'Chips and Mild Fresh Tomato Salsa': 1,
+# 'Chips and Roasted Chili Corn Salsa': 23,
+# 'Chips and Roasted Chili-Corn Salsa': 18,
+# 'Chips and Tomatillo Green Chili Salsa': 45,
+# 'Chips and Tomatillo Red Chili Salsa': 50,
+# 'Chips and Tomatillo-Green Chili Salsa': 33,
+#'Chips and Tomatillo-Red Chili Salsa': 25,
+# 'Side of Chips': 110}
 '''
 BONUS: Think of a question about this data that interests you, and then answer it!
