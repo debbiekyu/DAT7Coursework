@@ -82,8 +82,6 @@ for row in Base:
 Expected output: {'Aer Lingus': 0.07, 'Aeroflot': 2.73, ...}
 '''
 
-avg_incidents = {}
-avg_incidents.keys(airlines_nos)
 
 #Take the two lists, avg incidents and airline names, and value-key them together
 #loop through the two lists

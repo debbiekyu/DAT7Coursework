@@ -14,7 +14,6 @@ import csv
 with open('chipotle.tsv', 'rU') as f:
 	chipotle_data = csv.reader(f, delimiter="\t")
 	data = [row for row in chipotle_data]
-	    
 
 '''
 BASIC LEVEL
@@ -53,8 +52,13 @@ PART 5: Calculate the average number of toppings per burrito.
 Note: Let's ignore the 'quantity' column to simplify this task.
 Hint: Think carefully about the easiest way to count the number of toppings!
 '''
+#go through each row to see if it has "burrito" in row[2], get total lines
+#get total toppings count via # of commas per burrito line, total them and divide by
+#total list of burrito lines
 
-
+burrito_count = [1 for row in order_data if "Burrito" in row[2]]
+topping_count = [row[3].count(",") +1 for row in order_data if "Burrito" in row[2]]
+avg_burrito_toppings= round(float(sum(topping_count))/sum(burrito_count), 2)
 
 '''
 ADVANCED LEVEL
@@ -64,8 +68,25 @@ Expected output: {'Chips and Roasted Chili-Corn Salsa': 18, ... }
 Note: Please take the 'quantity' column into account!
 Optional: Learn how to use 'defaultdict' to simplify your code.
 '''
+#create a key for each unique chip order
+#loop through rows in order_data, if there is a chip order, create a key
+#provided the key does not already exist, otherwise, add to value to existing key
 
-
-
+#using default dict:
+from collections import defaultdict
+chips_dict = defaultdict(int)
+for row in order_data:
+    if "Chips" in row[2]:
+        chips_dict[row[2]] =  chips_dict[row[2]] + int(row[1])
+        
+#not using default dict:
+chips_dict = {}
+for row in order_data:
+    if "Chips" in row[2]:
+        if row[2] in chips_dict:
+            chips_dict[row[2]] =  chips_dict[row[2]] + int(row[1])
+        else:
+            chips_dict[row[2]] = int(row[1])
+    
 '''
 BONUS: Think of a question about this data that interests you, and then answer it!
