@@ -27,7 +27,7 @@ movies.sort('duration').tail()
 # create a histogram of duration, choosing an "appropriate" number of bins
 import matplotlib.pyplot as plt
 movies.duration.plot(kind='hist', bins=25)
-#alternatively, i had issues with my ipython console so using terminal, i used:
+#alternatively, when i had issues with my ipython console so using terminal, i also used:
 import pylab
 pylab.ion() 
 #which then opened my plots in a separate window. 
@@ -48,30 +48,26 @@ movies.groupby('content_rating').title.count().plot(kind='bar', title='Distribut
 #NEED TO REVISIT FOR AXIS LABELS!!!
 
 # convert the following content ratings to "UNRATED": NOT RATED, APPROVED, PASSED, GP
-movies.content_rating.replace('NOT RATED','UNRATED', inplace=True)
-movies.content_rating.replace('APPROVED','UNRATED', inplace=True)
-movies.content_rating.replace('PASSED','UNRATED', inplace=True)
-movies.content_rating.replace('GP','UNRATED', inplace=True)
+movies.content_rating.replace(['NOT RATED','APPROVED','PASSED','GP'],'UNRATED', inplace=True)
 
 # convert the following content ratings to "NC-17": X, TV-MA
-movies.content_rating.replace('X','NC-17', inplace=True)
-movies.content_rating.replace('TV-MA','NC-17', inplace=True)
+movies.content_rating.replace(['X','TV-MA'], 'NC-17', inplace=True)
 
 # count the number of missing values in each column
 movies.isnull().sum()
 #there are 3 missing values in the content_rating column. No missing values in other columns.
 
 # if there are missing values: examine them, then fill them in with "reasonable" values
-movies.content_rating.replace('NaN','MISSING', inplace=True)
+movies.content_rating.fillna(value='NA', inplace=True)
 
 # calculate the average star rating for movies 2 hours or longer,
 # and compare that with the average star rating for movies shorter than 2 hours
 movies[movies.duration < 120].star_rating.mean()
 #7.84
-movies[movies.duration > 120].star_rating.mean()
+movies[movies.duration >= 120].star_rating.mean()
 #7.95
-#Movies that are longer than 1 hrs have a slightly better star rating avg of 7.95 as opposed
-#to movies that hare shorter than 1 hr, which have an avg star rating of #7.84
+#Movies that are 2 hrs or longer have a slightly better star rating avg of 7.95 as opposed
+#to movies that are shorter than 2 hrs, which have an avg star rating of #7.84
 
 # use a visualization to detect whether there is a relationship between star rating and duration
 movies.plot(kind='scatter',x='star_rating',y='duration')
@@ -87,16 +83,38 @@ ADVANCED LEVEL
 
 # visualize the relationship between content rating and duration
 movies.groupby('content_rating').duration.mean().plot(kind='bar')
-#bar graph does not seem to display any relationship between content rating and duration.
+#The above didn't show much variation in terms of mean so did the following:
+movies.boxplot(by='content_rating')
 
 # determine the top rated movie (by star rating) for each genre
 
-movies.groupby('genre').star_rating.max()
+movies.groupby('genre').describe()
+
+#NEED TO REVISIT THIS TO GET THE TITLE OF THE MOVIE!! 
 
 # check if there are multiple movies with the same title, and if so, determine if they are actually duplicates
 movies[movies.title.duplicated()]
+#the above code is telling me what movies supposedly have the same title, need to check they are actually dupes
 
 # calculate the average star rating for each genre, but only include genres with at least 10 movies
+
+avg_star_rating = movies.groupby('genre').star_rating.agg(['mean'])
+genre_count = movies.genre.value_counts()[:9]
+
+
+
+
+#
+#for title, genre in movies.groupby('genre'):
+#    print movies.star_rating.max()
+
+movies.filter([movies.genre.value_counts() >=10])
+
+movies[movies.genre=='Drama'].star_rating.mean()
+
+top_movies =[]
+for title, star_rating in movies.groupby('genre'):
+    top_movies['title'] = star_rating.max()
 
 '''
 BONUS
