@@ -90,31 +90,23 @@ movies.boxplot(by='content_rating')
 
 movies.groupby('genre').describe()
 
-#NEED TO REVISIT THIS TO GET THE TITLE OF THE MOVIE!! 
+#I struggled with this to be able to filter a dataframe for particular rows. My thought
+#was that you can then figure out the top-rated movie was and then filter the dataframe
+#by the max value.  
 
 # check if there are multiple movies with the same title, and if so, determine if they are actually duplicates
-movies[movies.title.duplicated()]
-#the above code is telling me what movies supposedly have the same title, need to check they are actually dupes
+dupes = movies[movies.title.duplicated()]
+#the above code is telling me what movies supposedly have the same title, 
+#but I am not sure how to cross-reference this with the rest of the movie
+#dataframe to check they are actually dupes
 
 # calculate the average star rating for each genre, but only include genres with at least 10 movies
 
+#I think I got a partial solution here but was having trouble figuring out how to reference
+#one dataframe with another.  
 avg_star_rating = movies.groupby('genre').star_rating.agg(['mean'])
-genre_count = movies.genre.value_counts()[:9]
+genre_count = movies.genre.value_counts()>=10
 
-
-
-
-#
-#for title, genre in movies.groupby('genre'):
-#    print movies.star_rating.max()
-
-movies.filter([movies.genre.value_counts() >=10])
-
-movies[movies.genre=='Drama'].star_rating.mean()
-
-top_movies =[]
-for title, star_rating in movies.groupby('genre'):
-    top_movies['title'] = star_rating.max()
 
 '''
 BONUS
