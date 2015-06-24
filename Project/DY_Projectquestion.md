@@ -17,7 +17,7 @@ depending on where they are, and understand the power of open data.
 The list of crime incidents for 2014 looks pretty complete, with over 38k entries, MOST of which are complete.    
 Most of the fields are fairly self-explanatory, one field is called "neighborhood cluster",
 which is a grouping of 3-5 neighborhoods used by DC government for statistical purposes
-(e.g. Cluster 2 is Columbia Heights, Mt. Pleasant, Pleasant Plains, and Park View). I think my    
+(e.g. Cluster 2 is Columbia Heights, Mt. Pleasant, Pleasant Plains, and Park View). I think my  
 biggest challenge will be figuring out the right geographic size by which I can make an accurate 
 prediction - I may need to use groupings of block coordinates.  Other fields that are relevant/interesting 
 are reported date/time, type of offense, method of offense, block site address, block xcoord and ycoord, ward, and census tract. 
