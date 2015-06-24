@@ -21,8 +21,7 @@ which is a grouping of 3-5 neighborhoods used by DC government for statistical p
 biggest challenge will be figuring out the right geographic size by which I can make an accurate 
 prediction - I may need to use groupings of block coordinates.  Other fields that are relevant/interesting 
 are reported date/time, type of offense, method of offense, block site address, block xcoord and ycoord, ward, and census tract. 
-Weather and census data is readily available but I do want to check a couple other outlets  
-for real estate.  
+Weather and census data is readily available but I do want to check a couple other outlets for real estate.  
 
 *Data sources*  
 District of Columbia Crime Incidents data for 2014
