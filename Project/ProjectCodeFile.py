@@ -7,7 +7,11 @@ Created on Tue Jun 23 21:55:06 2015
 
 import pandas as pd
 import numpy as np
+import matplotlib as mpl
+import scipy as sp 
 import matplotlib.pyplot as plt
+
+import seaborn as sns
 crimes = pd.read_csv('Crime Incidents - 2014.csv')
 
 '''
@@ -39,7 +43,8 @@ crimes.groupby(['policeshift','offense']).count()
 
 '''
 Questions:
-What are the hours of the police shifts?
+What are the hours of the police shifts??
+
 
 '''
 '''
@@ -57,13 +62,19 @@ crimes_totals.plot(kind='bar',grid=False,colormap='Wistia_r')
 ward1=crimes[crimes.ward == 1].groupby('offense').ward.count()
 ward2=crimes[crimes.ward == 2].groupby('offense').ward.count()
 ward3=crimes[crimes.ward == 3].groupby('offense').ward.count()
-ward4=crimes[crimes.ward == 4].groupby('offense').ward.count()
-ward5=crimes[crimes.ward == 5].groupby('offense').ward.count()
-ward6=crimes[crimes.ward == 6].groupby('offense').ward.count()
-ward7=crimes[crimes.ward == 7].groupby('offense').ward.count()
 ward8=crimes[crimes.ward == 8].groupby('offense').ward.count()
 sexabuse=crimes[crimes.offense=='SEX ABUSE'].groupby('ward').offense.count()
+assault=crimes[crimes.offense=='ASSAULT W/DANGEROUS WEAPON'].groupby('ward').offense.count()
+
+#plots using pandas default plots
 sexabuse.plot(kind='bar')
+assault.plot(kind='bar')
+
+#plots using seaborn
+sns.barplot(x='offense', data=crimes)
+sns.factorplot(x='offense', row='ward', data=crimes, kind='bar')
+sns.factorplot(x='offense',data=ward8,kind='bar')
+sns.factorplot(x='ward',hue='ward',data=assault,kind='bar',palette='Blues')
 
 #crime barplots by ward
 crimes_totals.plot(kind='bar',grid=False,colormap='Wistia_r')
