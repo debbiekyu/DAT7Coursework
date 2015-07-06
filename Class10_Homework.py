@@ -22,6 +22,7 @@ yelp = pd.read_csv('yelp.csv')
 #explore the relationship between each of the vote types and the number of stars
 sns.pairplot(yelp, x_vars=['cool','useful','funny'], y_vars='stars', size=4)
 sns.pairplot(yelp)
+sns.heatmap(yelp.corr())
 
 '''
 It seems that people will write highly useful, cool, and useful and cool reviews for more highly
@@ -29,6 +30,10 @@ rated restaurants, generally speaking. There aren't that many cool reviews for 1
 places as opposed to useful reviews for 1-2 star places. There is a greater distribution of funny
 reviews across different star ratings; in conjunction from what I have observed, people
 like to be comical with their reviews for both great and horrible places.
+
+According to the heatmap, it seems that the features cool/useful/funny all have a stronger
+correlation to each other than they do to the star rating that the person gave.  The only feature
+that has any correlation at all is "cool" reviews and stars.  
 '''
 
 #define cool/useful/funny as the features and stars as the response
@@ -122,11 +127,11 @@ knnscores['knntries']=knntries
 knnscores['scores']=scores
 yelpknn = pd.DataFrame(knnscores)
 yelpknn.plot(x='knntries',y='scores',kind='scatter')
+#It looks like the values just never go above .39 and our best bet is using n=50!
 
 
-
-
-#Constructing the data myself from yelp.json
+#Constructing the data myself from yelp.json. I didn't get very far with this but
+#I at least wanted to show my thought process!
 with open('yelp.json', 'rU') as f:
     data = f.readlines()
     
@@ -141,9 +146,8 @@ useful ={}
 cool = {}
 
 yelp_list[0]['votes'].keys() 
-
-
-
+#ok so the above is where I got stuck because the below code shows funny/useful/cool
+#being used as the keys and obviously that's not what I wanted to do! :) 
 yelpdataframe = pd.DataFrame((yelp_list[0])
 
 
