@@ -12,13 +12,15 @@ dcdata=pd.read_csv('dcprojectdata.csv')
 dcdata.isnull().sum()
 dcdata = dcdata[dcdata.neighborhoodcluster.notnull()]
 
-#for some reason after i merged my two dataframes i lost the datetime format
+#convert data types to datetime 
 dcdata['start_date'] = pd.to_datetime(dcdata.start_date)
 dcdata['reportdatetime'] = pd.to_datetime(dcdata.reportdatetime)
 dcdata['lastmodifieddate'] = pd.to_datetime(dcdata.lastmodifieddate)
 dcdata['end_date'] = pd.to_datetime(dcdata.end_date)
+dcdata['date_only'] = pd.to_datetime(dcdata.date_only)
 
-
+#sort by date
+dcdata.sort('date_only')
 
 '''
 DATA EXPLORATION
@@ -35,38 +37,57 @@ dcdata.groupby(['policeshift','offense']).count()
 
 #look at crimes by cluster
 dcdata.groupby(['neighborhoodcluster','offense']).agg(['count', 'mean', 'min', 'max'])
+neighborhood_offense_count=dcdata.groupby(['neighborhoodcluster','offense']).agg(['count'])
+
+#look at crimes by month
+dcdata.groupby(['month','offense']).agg('count')
 
 #looking at the count of crimes by neighborhood cluster
-crimes_count=dcdata[dcdata.groupby('neighborhoodcluster').offense.count()]
+neighborhood_crimes_count=dcdata.groupby('neighborhoodcluster').offense.count()
+monthly_crimes_count=dcdata.groupby('month').offense.count()
+
+jan_crimes=dcdata(dcdata.month==1).groupby('offense').ward.count()
+
+jan_crimes.groupby('offense').ward.count()
+
 dailycrimes=dcdata[dcdata.groupby('reportdatetime').ward.count()]
 
 dcdata[dcdata.reportdatetime.day]
-
-
-
-
-
-#datetime plotting not quite figured out yet
-plt.plot_date(x=days, y=impressions)
 
 '''
 EXPLORATORY VISUALIZATIONS
 '''
 
+'''
+LINE PLOTS
+'''
+#line plot of offenses for the year
+dcdata.date_only.value_counts().plot()
+
+
+'''
+CRIME BARPLOTS 
+'''
 #crimes groupby plot data
 crimes_totals = dcdata.groupby('offense').ward.count().order()
-#overall barplot of crimes
-crimes_totals.plot(kind='bar',grid=False,colormap='Wistia_r')
 
-
-
-#data crime barplots by ward
+#ward crime data
 ward1=dcdata[dcdata.ward == 1].groupby('offense').ward.count()
 ward2=dcdata[dcdata.ward == 2].groupby('offense').ward.count()
 ward3=dcdata[dcdata.ward == 3].groupby('offense').ward.count()
 ward8=dcdata[dcdata.ward == 8].groupby('offense').ward.count()
 
+#total crime barplot
+crimes_totals.plot(kind='bar',grid=False,colormap='Wistia_r')
+#crime barplots by ward
+ward1.plot(kind='bar')
+ward2.plot(kind='bar')
+ward3.plot(kind='bar')
+ward8.plot(kind='bar')
 
+'''
+SPECIFIC OFFENSE PLOTS
+'''
 sexabuse=dcdata[dcdata.offense=='SEX ABUSE'].groupby('neighborhoodcluster').offense.count()
 assault=dcdata[dcdata.offense=='ASSAULT W/DANGEROUS WEAPON'].groupby('neighborhoodcluster').offense.count()
 homicide=dcdata[dcdata.offense=='HOMICIDE'].groupby('neighborhoodcluster').offense.count()
@@ -76,6 +97,15 @@ theft_other=dcdata[dcdata.offense=='THEFT/OTHER'].groupby('neighborhoodcluster')
 theft_auto=dcdata[dcdata.offense=='THEFT F/AUTO'].groupby('neighborhoodcluster').offense.count()
 robbery=dcdata[dcdata.offense=='ROBBERY'].groupby('neighborhoodcluster').offense.count()
 vehicletheft=dcdata[dcdata.offense=='MOTOR VEHICLE THEFT'].groupby('neighborhoodcluster').offense.count()
+
+vehicletheft.append('assault')
+
+
+vehicletheft.plot(kind='bar')
+assault.plot(kind='bar')
+
+
+
 
 offensetotal=dcdata.groupby('neighborhoodcluster').offense.count()
 
@@ -94,12 +124,7 @@ plt.xticks(ind)
 sexabuse.plot(kind='bar',color='blue')
 assault.plot(kind='bar',color='green')
 
-#crime barplots by ward
-crimes_totals.plot(kind='bar',grid=False,colormap='Wistia_r')
-ward1.plot(kind='bar')
-ward2.plot(kind='bar')
-ward3.plot(kind='bar')
-ward8.plot(kind='bar')
+
 #filtering for relevant columns
 
 '''
