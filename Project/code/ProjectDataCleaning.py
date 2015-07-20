@@ -44,6 +44,7 @@ neighborhooddata=pd.read_csv('neighborhooddata.csv')
 neighborhooddata.avgfamilyincome=neighborhooddata.avgfamilyincome.str.replace(',','').apply(int)
 neighborhooddata.foodstamps=neighborhooddata.foodstamps.str.replace(',','').apply(int)
 neighborhooddata.receivingtanf=neighborhooddata.receivingtanf.str.replace(',','').apply(float)
+neighborhooddata.population=neighborhooddata.population.str.replace(',','').apply(int)
 
 #fixing missing values for median home price
 #clusters 5, 8, 29, 36 dont have data for 2013, so i'm using the below:
@@ -77,8 +78,6 @@ reaganweather=pd.DataFrame(dcweather[dcweather.STATION=='GHCND:USW00013743'])
 #formatting columns 
 reaganweather.columns = [col.lower() for col in reaganweather]
 reaganweather['date']=pd.to_datetime(reaganweather.date)
-reaganweather['day']=reaganweather.date_only.dt.day
-reaganweather['month']=reaganweather.date_only.dt.month
 
 #formatting temperature and converting to fahrenheit, temperatures from .csv
 #files from NOAA are in tenths of degrees without the decimal point
@@ -97,6 +96,10 @@ reaganweather['date_only']=reaganweather.date_only.str[21:29]
 #convert to datetime 
 reaganweather['date_only']=pd.to_datetime(reaganweather.date_only)
 
+#adding month and day
+reaganweather['day']=reaganweather.date_only.dt.day
+reaganweather['month']=reaganweather.date_only.dt.month
+
 #resetting index
 reaganweather.reset_index(inplace=True)
 
@@ -110,10 +113,11 @@ reagan_weather.to_csv('2014reaganweatheredited.csv')
 '''
 MERGING DATAFRAMES 
 '''
+#joining crime and weather data by 'date'
 test_merge=pd.merge(crimes,reagan_weather, how='left', on='date_only')
-
-
-alldata=pd.merge(crimes, neighborhooddata, how='left', on='neighborhoodcluster')
+#joining the above dataframe with neighborhooddata by neighborhood cluster
+alldata=pd.merge(test_merge, neighborhooddata, how='left', on='neighborhoodcluster')
+#save dataframe to csv
 alldata.to_csv('dcprojectdata.csv')
 
 

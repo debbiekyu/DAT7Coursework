@@ -58,6 +58,9 @@ dcdata[dcdata.reportdatetime.day]
 EXPLORATORY VISUALIZATIONS
 '''
 
+sns.heatmap(dcdata.corr())
+
+
 '''
 LINE PLOTS
 '''
