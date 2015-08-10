@@ -11,14 +11,14 @@ DC Neighborhood Cluster Web-Scraper
 This is script for a web-scraper that I created to scrape data from the https://neighborhoodinfodc.org.
 I am scraping data by each 'Neighborhood Cluster' - in which each cluster has separate html webpages
 devoted to certain types of socioeconomic/population type data.  I have created lists below to scrape
-the data points that I want, and then build a script to scrape those elements into the list for each
+the data points that I want, and then built a script to scrape those elements into the list for each
 neighborhood cluster.
 '''
 import pandas as pd
 from bs4 import BeautifulSoup
 import requests 
 
-#creating a list of id's for each neighborhood cluster, 30 total
+#creating a list of id's for each neighborhood cluster, 39 total
 cluster_id=range(1,40)
 #lists of data points i want to scrape from the 'population' html page for each cluster
 Pop2010=[]

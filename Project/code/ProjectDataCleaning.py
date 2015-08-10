@@ -111,8 +111,8 @@ reaganweather['month']=reaganweather.date_only.dt.month
 #resetting index
 reaganweather.reset_index(inplace=True)
 
-#using pandas datetime function 'dayofweek' to get actual day of week each day
-#fell on (Monday=0, Tueday=1, Wednesday=2, Thursday=3, Friday=4, Saturday =5, Sunday=6)
+#using pandas datetime function 'dayofweek' to get actual day of week 
+#(Monday=0, Tueday=1, Wednesday=2, Thursday=3, Friday=4, Saturday =5, Sunday=6)
 year=range(0,365)  
 dayofweek=[]  
 for num in year:
@@ -132,7 +132,7 @@ reagan_weather.to_csv('2014reaganweatheredited.csv')
 '''
 MERGING ALL 3 DATAFRAMES 
 '''
-#joining crime and weather data by 'date'
+#joining crime and weather data by 'date_only'
 first_merge=pd.merge(crimes,reagan_weather, how='left', on='date_only')
 #joining the above dataframe with neighborhooddata by neighborhood cluster
 alldata=pd.merge(first_merge, neighborhooddata, how='left', on='neighborhoodcluster')
