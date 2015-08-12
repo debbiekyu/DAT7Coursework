@@ -12,8 +12,9 @@ dcdata=pd.read_csv('dcprojectdata.csv')
 
 #checking for null values
 dcdata.isnull().sum()
-#will drop all values that have neighborhood cluster missing, only 518 of over 38k rows
+#will drop all values that have neighborhood cluster or census tract, only ~700 rows of over 38k rows
 dcdata = dcdata[dcdata.neighborhoodcluster.notnull()]
+dcdata = dcdata[dcdata.census_tract.notnull()]
 
 #convert data types to datetime 
 dcdata['start_date'] = pd.to_datetime(dcdata.start_date)
@@ -21,18 +22,6 @@ dcdata['reportdatetime'] = pd.to_datetime(dcdata.reportdatetime)
 dcdata['lastmodifieddate'] = pd.to_datetime(dcdata.lastmodifieddate)
 dcdata['end_date'] = pd.to_datetime(dcdata.end_date)
 dcdata['date_only'] = pd.to_datetime(dcdata.date_only)
-
-
-#adding weekday, weekend feature cols
-dcdata['weekday']=dcdata.dayofweek.map({0:1,1:1,2:1,3:1,4:1,5:0,6:0})
-dcdata['weekend']=dcdata.dayofweek.map({0:0,1:0,2:0,3:0,4:0,5:1,6:1})
-
-#add hour grouping
-#5-16 day
-#17-4 night
-dcdata['hour_2']=dcdata.hour.map({1:'night',2:'night',3:'night',4:'night',5:'day',6:'day',7:'day',8:'day',9:'day',10:'day',11:'day',12:'day',13:'day',14:'day',15:'day',16:'day',17:'night',18:'night',19:'night',20:'night',21:'night',22:'night',23:'night',0:'night'})
-hour_dummies = pd.get_dummies(dcdata.hour_2, prefix='time2')
-dcdata = pd.concat([dcdata, hour_dummies], axis=1)
 
 import seaborn as sns
 import numpy as np
@@ -60,14 +49,13 @@ mask = np.random.rand(len(dcdata[dcdata.violent==0])) < 0.19
 nonviolentdownsample=dcdata[dcdata.violent==0][mask]
 violent=dcdata[dcdata.violent==1]
 dcdownsample=pd.concat([violent, nonviolentdownsample])
-dcdownsample = dcdownsample[dcdownsample.census_tract.notnull()]
-len(dcdownsample) #length of this new dataframe is 12026
+len(dcdownsample) #length of this new dataframe is around ~12k rows
 
 '''
 NULL HYPOTHESIS
 '''
 dcdownsample.violent.mean()
-#0.50124729752203556
+#0.50004
 
 '''
 DECISION TREES
@@ -99,14 +87,14 @@ plt.ylabel('Accuracy')
 
 
 #max depth 5 tree
-treereg = DecisionTreeClassifier(max_depth=5, random_state=1)
+treereg = DecisionTreeClassifier(max_depth=4, random_state=1)
 treereg.fit(X,y)
 
 #computing feature performance
 feature_imp=pd.DataFrame({'feature':feature_cols, 'importance':treereg.feature_importances_}).sort(columns='importance', ascending=False)
 
 from sklearn.tree import export_graphviz
-export_graphviz(treereg, out_file='tree_crime12.dot', feature_names=feature_cols)
+export_graphviz(treereg, out_file='tree_crime13.dot', feature_names=feature_cols)
 
 
 

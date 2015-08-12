@@ -41,6 +41,13 @@ crimes['hour']=crimes.reportdatetime.dt.hour
 #1 is for violent crimes, 0 for non-violent
 crimes['violent']=crimes.offense.map({'SEX ABUSE':1,'HOMICIDE':1,'ASSAULT W/DANGEROUS WEAPON':1, 'ROBBERY':1, 'ARSON':0,'BURGLARY':0,'THEFT/OTHER':0,'THEFT F/AUTO':0, 'MOTOR VEHICLE THEFT':0})
 
+#add hour grouping
+#5-16 day
+#17-4 night
+crimes['hour_2']=crimes.hour.map({1:'night',2:'night',3:'night',4:'night',5:'day',6:'day',7:'day',8:'day',9:'day',10:'day',11:'day',12:'day',13:'day',14:'day',15:'day',16:'day',17:'night',18:'night',19:'night',20:'night',21:'night',22:'night',23:'night',0:'night'})
+hour_dummies = pd.get_dummies(crimes.hour_2, prefix='time2')
+crimes = pd.concat([crimes, hour_dummies], axis=1)
+
 
 '''
 CLEANING WEB-SCRAPED NEIGHBORHOOD DATA
@@ -94,7 +101,6 @@ reaganweather['tmaxf']=(reaganweather.tmax/10)*9/5+32
 
 #calculating average temperature
 reaganweather['avgtempf']=(reaganweather.tminf+reaganweather.tmaxf)/2
-reaganweather.to_csv('2014reaganweather.csv')
 
 #reformatting date, since converting to datetime with no hr/min/sec results in
 #extra characters and date format is incorrect
@@ -121,7 +127,11 @@ for num in year:
 #append to reaganweather dataframe
 reaganweather['dayofweek']=dayofweek
  
-weather_cols=['date_only','tminf','tmaxf','avgtempf','prcp','snow','day','month','dayofweek']
+#adding weekend feature cols
+reaganweather['weekend']=reaganweather.dayofweek.map({0:0,1:0,2:0,3:0,4:0,5:1,6:1})
+ 
+#selecting certain features for weather
+weather_cols=['date_only','avgtempf','prcp','snow','day','month','dayofweek','weekend']
 reagan_weather=reaganweather[weather_cols]
 
 #save to CSV
